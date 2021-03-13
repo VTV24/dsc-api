@@ -11,6 +11,6 @@ export class UserController {
 
     @Get()
     async getUsers(@Req() req: AppRequest) {
-        return req.user;
+        return req.token;
     }
 }

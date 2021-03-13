@@ -14,7 +14,7 @@ export class AuthMiddleware implements NestMiddleware {
         );
         const token = await req.headers.authorization;
         if (token) {
-            req.user = this.fireAuth.verifyIdToken(
+            req.token = await this.fireAuth.verifyIdToken(
                 token.replace('Bearer ', ''),
             );
             next();

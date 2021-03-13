@@ -1,7 +1,8 @@
 import { Request } from 'express';
+import { auth } from 'firebase-admin';
 
 type AppRequest = Request & {
-    user: any;
+    token: auth.DecodedIdToken;
 };
 
 export default AppRequest;
