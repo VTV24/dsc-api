@@ -12,6 +12,7 @@ import * as admin from 'firebase-admin';
 import firebaseCredential from './config/firebase';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MONGO_URL } from './config/mongodb';
+import { EventModule } from './event/event.module';
 
 @Module({
     imports: [
@@ -21,6 +22,7 @@ import { MONGO_URL } from './config/mongodb';
             credential: admin.credential.cert(firebaseCredential as any),
         }),
         MongooseModule.forRoot(MONGO_URL),
+        EventModule,
     ],
     controllers: [],
     providers: [],

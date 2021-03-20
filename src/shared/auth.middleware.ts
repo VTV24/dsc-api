@@ -14,10 +14,14 @@ export class AuthMiddleware implements NestMiddleware {
         );
         const token = await req.headers.authorization;
         if (token) {
-            req.token = await this.fireAuth.verifyIdToken(
-                token.replace('Bearer ', ''),
-            );
-            next();
+            try {
+                req.token = await this.fireAuth.verifyIdToken(
+                    token.replace('Bearer ', ''),
+                );
+                next();
+            } catch (err) {
+                throw new ForbiddenException(err);
+            }
         } else {
             throw new ForbiddenException();
         }
