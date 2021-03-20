@@ -7,43 +7,25 @@ export type UserDocument = User & Document;
     versionKey: false,
 })
 export class User {
-    @Prop({
-        required: true,
-    })
+    @Prop()
     _id: string; //UID
 
-    @Prop({
-        required: true,
-        type: Date,
-    })
+    @Prop()
     birthDate: Date;
 
-    @Prop({
-        required: true,
-        type: String,
-    })
+    @Prop()
     job: string;
 
-    @Prop({
-        required: true,
-        type: String,
-    })
+    @Prop()
     gender: string;
 
-    @Prop({
-        type: String,
-    })
+    @Prop()
     bio: string;
 
-    @Prop({
-        type: [{ eventId: String, timeJoin: Date }],
-    })
+    @Prop()
     eventsJoin: [{ eventId: string; timeJoin: Date }];
 
-    @Prop({
-        type: [{ eventId: String, timeJoin: Date }],
-    })
+    @Prop()
     eventsHost: [{ eventId: string; timeCreate: Date }];
 }
-
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -1,4 +1,4 @@
-import { User, UserDocument } from './../schema/user.schema';
+import { User, UserDocument } from '../shared/schema/user.schema';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { FirebaseAuthenticationService } from '@aginix/nestjs-firebase-admin';
 import { InjectModel } from '@nestjs/mongoose';

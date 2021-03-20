@@ -9,9 +9,9 @@ import {
 import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin';
 import { UserModule } from './user/user.module';
 import * as admin from 'firebase-admin';
-import firebaseCredential from './config/firebase';
+import firebaseCredential from './shared/config/firebase';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MONGO_URL } from './config/mongodb';
+import { MONGO_URL } from './shared/config/mongodb';
 import { EventModule } from './event/event.module';
 
 @Module({

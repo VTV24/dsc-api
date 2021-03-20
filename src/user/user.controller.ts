@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import AppRequest from 'src/types/request.type';
+import AppRequest from 'src/shared/types/request.type';
 import ProfileDto from './dto/profile.dto';
 import { UserService } from './user.service';
 

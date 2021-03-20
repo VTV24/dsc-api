@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Response } from 'express';
 import { FirebaseAuthenticationService } from '@aginix/nestjs-firebase-admin';
-import AppRequest from 'src/types/request.type';
+import AppRequest from 'src/shared/types/request.type';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
