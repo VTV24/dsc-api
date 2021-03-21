@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import AppRequest from 'src/shared/types/request.type';
 import ProfileDto from './dto/profile.dto';
@@ -28,7 +28,7 @@ export class UserController {
         type: String,
         example: 'abc',
     })
-    @Get('/')
+    @Get('/search')
     async searchUser(
         @Req() req: AppRequest,
         @Query('search') search: string,
@@ -52,5 +52,10 @@ export class UserController {
     @Get('/account')
     async getAccountFirebase(@Req() req: AppRequest) {
         return this.userService.getFirebaseAccountInfo(req.token.uid);
+    }
+
+    @Put('/range')
+    async updateRange(@Req() req: AppRequest, @Query('range', ParseIntPipe) range: number) {
+        return this.userService.updateRange(req.token.uid, range);
     }
 }

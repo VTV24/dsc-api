@@ -11,21 +11,24 @@ export class Event {
     @Prop({
         required: true,
         type: {
+            coordinates: {
+                type: [Number], // [<longitude>, <latitude>]
+            },
             location: {
                 type: String,
                 enum: ['Point'],
-                default: 'Point',
-            },
-            coordinates: {
-                type: [Number],
-                default: [0, 0],
             },
         },
     })
-    place: {
+    location: {
+        coordinates: number[];
         type: string;
-        coordinates: [number];
     };
+
+    @Prop({
+        default: '',
+    })
+    place?: string;
 
     @Prop()
     time: Date;
@@ -33,29 +36,52 @@ export class Event {
     @Prop()
     timeCreate: Date;
 
-    @Prop()
-    isCompleted: boolean;
+    @Prop({
+        default: false,
+    })
+    isCompleted?: boolean;
 
-    @Prop()
-    participants: [{ userId: string; time: Date }];
+    @Prop({ default: [] })
+    participants?: [{ userId: string; time: Date }];
 
-    @Prop()
+    @Prop({
+        default: 5,
+    })
     limit: number;
 
-    @Prop()
-    host: string; //user id
+    @Prop({
+        default: 1,
+    })
+    count?: number; // -1 is full
 
-    @Prop()
-    description: string;
+    @Prop({
+        type: {
+            userId: String,
+            displayName: String,
+        },
+    })
+    host: {
+        userId: string;
+        displayName: string;
+    }; //user id
+
+    @Prop({
+        default: '',
+    })
+    description?: string;
 
     @Prop()
     imageMain: string;
 
-    @Prop()
-    images: [string];
+    @Prop({
+        default: [],
+    })
+    images?: [string];
 
-    @Prop()
-    chatRoomId: string;
+    @Prop({
+        default: '',
+    })
+    chatRoomId?: string;
 }
 export const EventSchema = SchemaFactory.createForClass(Event);
 

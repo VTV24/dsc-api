@@ -1,11 +1,6 @@
 import { AuthMiddleware } from './shared/auth.middleware';
 import { SharedModule } from './shared/shared.module';
-import {
-    MiddlewareConsumer,
-    Module,
-    NestModule,
-    RequestMethod,
-} from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin';
 import { UserModule } from './user/user.module';
 import * as admin from 'firebase-admin';

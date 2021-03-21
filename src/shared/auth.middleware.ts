@@ -8,16 +8,11 @@ export class AuthMiddleware implements NestMiddleware {
     constructor(private readonly fireAuth: FirebaseAuthenticationService) {}
 
     async use(req: AppRequest, res: Response, next: NextFunction) {
-        console.log(
-            new Date().toUTCString(),
-            ` - ${req.ip} ${req.method}: ${req.path}`,
-        );
+        console.log(new Date().toUTCString(), ` - ${req.ip} ${req.method}: ${req.path}`);
         const token = await req.headers.authorization;
         if (token) {
             try {
-                req.token = await this.fireAuth.verifyIdToken(
-                    token.replace('Bearer ', ''),
-                );
+                req.token = await this.fireAuth.verifyIdToken(token.replace('Bearer ', ''));
                 next();
             } catch (err) {
                 throw new ForbiddenException(err);

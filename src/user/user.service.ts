@@ -4,13 +4,22 @@ import { FirebaseAuthenticationService } from '@aginix/nestjs-firebase-admin';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import ProfileDto from './dto/profile.dto';
+import { Event, EventDocument } from 'src/shared/schema/event.schema';
 
 @Injectable()
 export class UserService {
-    constructor(private firebaseAuth: FirebaseAuthenticationService, @InjectModel(User.name) private userModel: Model<UserDocument>) {}
+    constructor(
+        private firebaseAuth: FirebaseAuthenticationService,
+        @InjectModel(User.name) private userModel: Model<UserDocument>,
+        @InjectModel(Event.name) private eventModel: Model<EventDocument>,
+    ) {}
+
+    async getToken() {
+        return this.firebaseAuth.createCustomToken('HauNsEhzahRvkn9lxg7bwlkAmUf1');
+    }
 
     async getProfile(userId: string) {
-        const profile = (await this.userModel.findById(userId)) as User;
+        const profile = await this.userModel.findById(userId);
         const accountInfo = await this.firebaseAuth.getUser(userId);
         if (profile) {
             return {
@@ -44,6 +53,8 @@ export class UserService {
             this.firebaseAuth.updateUser(userId, {
                 displayName: profile.displayName,
             });
+        } else {
+            profile.displayName = (await this.firebaseAuth.auth.getUser(userId)).displayName;
         }
         // exit user => update
         if (usr) {
@@ -84,7 +95,8 @@ export class UserService {
                     displayName: 1,
                 })
                 .skip(page > 0 ? (page - 1) * limit : 0)
-                .limit(limit),
+                .limit(limit)
+                .select('_id displayName'),
         ]);
 
         return {
@@ -93,5 +105,23 @@ export class UserService {
             totalPage: Math.ceil((totalPage - 1) / limit),
             listResult,
         };
+    }
+
+    async getEventMath(userId: string) {
+        const eventsJoin = (await this.userModel.findById(userId)).eventsJoin.map((event) => event.eventId);
+
+        return this.eventModel
+            .find({
+                _id: {
+                    $in: eventsJoin,
+                },
+            })
+            .select('_id place imageMain host');
+    }
+
+    async updateRange(userId: string, range: number) {
+        return this.userModel.findByIdAndUpdate(userId, {
+            range: range,
+        });
     }
 }

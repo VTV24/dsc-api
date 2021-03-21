@@ -6,7 +6,7 @@ class ProfileDto {
         required: false,
     })
     @Allow()
-    displayName: string;
+    displayName?: string;
 
     @ApiProperty({
         description: '"dd-mm-yyyy"',

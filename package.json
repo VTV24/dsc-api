@@ -33,6 +33,7 @@
         "firebase-admin": "^9.5.0",
         "firebase-functions": "^3.13.2",
         "mongoose": "^5.11.20",
+        "node-geocoder": "^3.27.0",
         "reflect-metadata": "^0.1.13",
         "rimraf": "^3.0.2",
         "rxjs": "^6.6.3",
