@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, Req } from '@nestjs/common';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import AppRequest from 'src/shared/types/request.type';
 import ProfileDto from './dto/profile.dto';
 import { UserService } from './user.service';
@@ -9,6 +9,34 @@ import { UserService } from './user.service';
 @Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) {}
+
+    @ApiQuery({
+        name: 'page',
+        required: false,
+        type: Number,
+        example: 1,
+    })
+    @ApiQuery({
+        name: 'limit',
+        required: false,
+        type: Number,
+        example: 10,
+    })
+    @ApiQuery({
+        name: 'search',
+        required: true,
+        type: String,
+        example: 'abc',
+    })
+    @Get('/')
+    async searchUser(
+        @Req() req: AppRequest,
+        @Query('search') search: string,
+        @Query('page', ParseIntPipe) page = 1,
+        @Query('limit', ParseIntPipe) limit = 1,
+    ) {
+        return this.userService.search(req.token.uid, search, page, limit);
+    }
 
     @Get('/profile')
     async getUsers(@Req() req: AppRequest) {

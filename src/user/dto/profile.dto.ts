@@ -1,7 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Allow, IsDateString, IsEnum, IsString } from 'class-validator';
+import { Allow, IsDateString, IsEnum, IsNumber, IsString } from 'class-validator';
 
 class ProfileDto {
+    @ApiProperty({
+        required: false,
+    })
+    @Allow()
+    displayName: string;
+
     @ApiProperty({
         description: '"dd-mm-yyyy"',
     })
@@ -18,9 +24,23 @@ class ProfileDto {
     @IsEnum(['male', 'female'])
     gender: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        required: false,
+    })
     @Allow()
     bio: string;
+
+    @ApiProperty({
+        required: false,
+    })
+    @Allow()
+    background: string;
+
+    @IsNumber()
+    @ApiProperty({
+        default: 5,
+    })
+    range: number;
 }
 
 export default ProfileDto;

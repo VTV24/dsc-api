@@ -11,6 +11,9 @@ export class User {
     _id: string; //UID
 
     @Prop()
+    displayName: string;
+
+    @Prop()
     birthDate: Date;
 
     @Prop()
@@ -23,9 +26,21 @@ export class User {
     bio: string;
 
     @Prop()
+    background: string;
+
+    @Prop()
     eventsJoin: [{ eventId: string; timeJoin: Date }];
 
     @Prop()
+    eventsSkip: [{ eventId: string; timeSkip: Date }];
+
+    @Prop()
     eventsHost: [{ eventId: string; timeCreate: Date }];
+
+    @Prop({
+        type: Number,
+        default: 5,
+    })
+    range: number;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
