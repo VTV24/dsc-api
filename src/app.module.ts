@@ -8,6 +8,7 @@ import firebaseCredential from './shared/config/firebase';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MONGO_URL } from './shared/config/mongodb';
 import { EventModule } from './event/event.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { EventModule } from './event/event.module';
         }),
         MongooseModule.forRoot(MONGO_URL),
         EventModule,
+        ChatModule,
     ],
     controllers: [],
     providers: [],

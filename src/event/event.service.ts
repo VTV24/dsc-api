@@ -1,7 +1,7 @@
 import { EventDto } from './dto/event.dto';
 import { Event, EventDocument } from 'src/shared/schema/event.schema';
 import { UserDocument, User } from 'src/shared/schema/user.schema';
-import { BadRequestException, ConflictException, Injectable, NotImplementedException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException, NotImplementedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -38,6 +38,10 @@ export class EventService {
 
     async getAllEvents(userId: string) {
         const usr = await this.userModel.findById(userId);
+        if (!usr)
+            throw new NotFoundException({
+                message: 'User not found',
+            });
         const eventMatch = usr.eventsJoin.map((event) => event.eventId);
         const eventSkip = usr.eventsSkip.map((event) => event.eventId);
 

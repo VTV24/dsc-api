@@ -11,7 +11,9 @@ export class ChatRoom {
     @Prop()
     eventId: string;
 
-    @Prop()
-    message: [MessageData];
+    @Prop({
+        default: [],
+    })
+    message: MessageData[];
 }
 export const ChatRoomSchema = SchemaFactory.createForClass(ChatRoom);
