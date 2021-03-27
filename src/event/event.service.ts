@@ -93,11 +93,6 @@ export class EventService {
                 count: {
                     $gt: -1,
                 },
-                // host: {
-                //     $not: {
-                //         $regex: userId,
-                //     },
-                // },
             })
             .limit(100)
             .select('_id place imageMain host');
