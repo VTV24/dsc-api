@@ -45,7 +45,7 @@ export class EventService {
         const eventMatch = usr.eventsJoin.map((event) => event.eventId);
         const eventSkip = usr.eventsSkip.map((event) => event.eventId);
 
-        return this.eventModel
+        const result = await this.eventModel
             .find({
                 // host: {
                 //     $not: {
@@ -60,6 +60,16 @@ export class EventService {
                 },
             })
             .select('_id place imageMain host');
+
+        return result.map((item) => {
+            return {
+                _id: item._id,
+                place: item.place,
+                imageMain: item.imageMain,
+                userId: item.host.userId,
+                displayName: item.host.displayName,
+            };
+        });
     }
 
     async getEventsInRange(userId: string, lon: number, lat: number) {
