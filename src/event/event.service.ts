@@ -47,11 +47,6 @@ export class EventService {
 
         const result = await this.eventModel
             .find({
-                // host: {
-                //     $not: {
-                //         $regex: userId,
-                //     },
-                // },
                 _id: {
                     $nin: [...eventMatch, ...eventSkip],
                 },
