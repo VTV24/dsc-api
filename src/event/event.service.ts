@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { EventDto } from './dto/event.dto';
 import { Event, EventDocument } from 'src/shared/schema/event.schema';
 import { UserDocument, User } from 'src/shared/schema/user.schema';
