@@ -61,6 +61,7 @@ export class EventService {
                     },
                 },
             })
+            .limit(10)
             .select('_id place imageMain host');
 
         return result.map((item) => {
