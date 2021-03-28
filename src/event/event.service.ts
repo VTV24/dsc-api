@@ -11,6 +11,8 @@ export class EventService {
     constructor(@InjectModel(Event.name) private eventModel: Model<EventDocument>, @InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
     async addEvent(event: EventDto, userId: string) {
+        console.log('event', event);
+
         const place = 'VietNam';
         const eventDoc: Event = {
             location: {
@@ -29,6 +31,7 @@ export class EventService {
             timeCreate: new Date(),
             place: place,
         };
+        console.log(eventDoc);
 
         return new this.eventModel(eventDoc).save();
     }
@@ -53,6 +56,11 @@ export class EventService {
                 },
                 count: {
                     $gt: -1,
+                },
+                'host.userId': {
+                    $not: {
+                        $regex: userId,
+                    },
                 },
             })
             .select('_id place imageMain host');
@@ -92,6 +100,11 @@ export class EventService {
                 },
                 count: {
                     $gt: -1,
+                },
+                'host.userId': {
+                    $not: {
+                        $regex: userId,
+                    },
                 },
             })
             .limit(100)

@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import ProfileDto from './dto/profile.dto';
 import { Event, EventDocument } from 'src/shared/schema/event.schema';
+import Faker from 'faker/locale/vi';
 
 @Injectable()
 export class UserService {
@@ -14,12 +15,9 @@ export class UserService {
         @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     ) {}
 
-    async getToken() {
-        return this.firebaseAuth.createCustomToken('HauNsEhzahRvkn9lxg7bwlkAmUf1');
-    }
-
     async getProfile(userId: string) {
         const profile = await this.userModel.findById(userId);
+
         const accountInfo = await this.firebaseAuth.getUser(userId);
         if (profile) {
             return {
@@ -37,7 +35,20 @@ export class UserService {
                 email: accountInfo.email,
                 photoURL: accountInfo.photoURL,
             };
-        } else throw new NotFoundException();
+        } else {
+            return new this.userModel({
+                uid: userId,
+                background: Faker.image.imageUrl(425, 200),
+                birthDate: Faker.date.past(2000),
+                bio: Faker.lorem.sentence(10),
+                gender: 'male',
+                job: Faker.name.jobTitle(),
+                displayName: accountInfo.displayName,
+                email: accountInfo.email,
+                range: 500,
+            }).save();
+        }
+        // else throw new NotFoundException();
     }
 
     async getFirebaseAccountInfo(userId: string) {

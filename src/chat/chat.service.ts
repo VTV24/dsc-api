@@ -28,4 +28,8 @@ export class ChatService {
     async pullMessages(chatRoomId: string) {
         return (await this.chatroomModel.findById(chatRoomId)).message;
     }
+
+    async getAllChatRoom(userId: string) {
+        return this.chatroomModel.find({});
+    }
 }
