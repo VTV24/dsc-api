@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { Allow, IsDateString, IsNumber, IsString, ValidateNested } from 'class-validator';
+import { Allow, ValidateNested } from 'class-validator';
 import { LocationDto } from './location.dto';
 
 export class EventDto {
@@ -14,11 +14,11 @@ export class EventDto {
     @ApiProperty({
         default: 10,
     })
-    @IsNumber()
+    @Allow()
     limit: number;
 
     @ApiProperty()
-    @IsDateString()
+    @Allow()
     time: Date;
 
     @ApiProperty({
@@ -28,7 +28,7 @@ export class EventDto {
     description: string;
 
     @ApiProperty()
-    @IsString()
+    @Allow()
     imageMain: string; //url image
 
     @ApiProperty()

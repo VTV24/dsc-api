@@ -5,7 +5,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import ProfileDto from './dto/profile.dto';
 import { Event, EventDocument } from 'src/shared/schema/event.schema';
-import Faker from 'faker/locale/vi';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Faker = require('faker/locale/vi');
 
 @Injectable()
 export class UserService {
@@ -37,7 +38,7 @@ export class UserService {
             };
         } else {
             return new this.userModel({
-                uid: userId,
+                _id: userId,
                 background: Faker.image.imageUrl(425, 200),
                 birthDate: Faker.date.past(2000),
                 bio: Faker.lorem.sentence(10),

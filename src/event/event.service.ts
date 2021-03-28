@@ -12,7 +12,6 @@ export class EventService {
 
     async addEvent(event: EventDto, userId: string) {
         console.log('event', event);
-
         const place = 'VietNam';
         const eventDoc: Event = {
             location: {
@@ -32,7 +31,6 @@ export class EventService {
             place: place,
         };
         console.log(eventDoc);
-
         return new this.eventModel(eventDoc).save();
     }
 
