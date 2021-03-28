@@ -16,6 +16,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
             message: exception.getResponse()['message'] || exception.message,
             timestamp: new Date().toISOString(),
         });
-        console.log(response);
+        console.log('req ', request.ip, '============', response.status);
     }
 }

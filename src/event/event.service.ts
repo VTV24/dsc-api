@@ -13,6 +13,7 @@ export class EventService {
     async addEvent(event: EventDto, userId: string) {
         console.log('event', event);
         const place = 'VietNam';
+        let user = await this.userModel.findById(userId);
         const eventDoc: Event = {
             location: {
                 type: 'Point',
@@ -20,7 +21,7 @@ export class EventService {
             },
             host: {
                 userId: userId,
-                displayName: (await this.userModel.findById(userId)).displayName,
+                displayName: user.displayName,
             },
             imageMain: event.imageMain,
             images: event.images,
@@ -31,7 +32,13 @@ export class EventService {
             place: place,
         };
         console.log(eventDoc);
-        return new this.eventModel(eventDoc).save();
+        return new this.eventModel(eventDoc).save().then((doc) => {
+            user.eventsHost.push({
+                eventId: doc._id,
+                timeCreate: new Date(),
+            });
+            user.save();
+        });
     }
 
     async getEventById(eventId: string) {
